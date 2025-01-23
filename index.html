@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geography Trivia Game</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+        }
+
+        #game-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid #007bff;
+        }
+
+        h1 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #question, #answer {
+            font-size: 1.2rem;
+            margin: 20px 0;
+            color: #333333;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        #question.visible, #answer.visible {
+            opacity: 1;
+        }
+
+        #answer {
+            font-style: italic;
+            font-weight: bold;
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #555555;
+        }
+    </style>
+</head>
+<body>
+    <div id="game-container">
+        <h1>Geography Trivia Game</h1>
+        <p>Test your knowledge or not. I don't care.</p>
+        <button id="get-question">Get Question</button>
+        <div id="question"></div>
+        <button id="show-answer" style="display: none;">Show Answer</button>
+        <div id="answer"></div>
+    </div>
+    <footer>© 2025 Geography Trivia Game | Created with procrastination</footer>
+
+    <script>
+        const questions = [
+            ["What two mountain ranges divide Europe from Asia?", "Ural and Caucasus Mts."],
+            ["What is the name of the world's largest lake?", "Caspian Sea"],
+            ["What man-made body of water separates Asia from Africa?", "The Suez Canal"],
+            ["What area is called the Crossroads of the Ancient World?", "The Middle East"],
+            ["What is the earth's largest and highest mountain range?", "Himalayas"],
+            ["Where is the lowest point on land?", "The Dead Sea"],
+            ["What modern empire controlled Central Asia for most of the 20th century?", "Soviet Union"],
+            ["Brunei, Indonesia, and Malaysia occupy the island of what?", "Borneo"],
+            ["The Amu Darya and the Syr Darya are the two principal rivers of what region?", "Central Asia"],
+            ["China's two most important rivers are the Huang He and the Brahmaputra. T or F", "False"],
+            ["This is the world's most populous country, it has a population of over 1 billion. T or F.", "True"],
+            ["What is the world's longest fortification?", "The Great Wall of China"],
+            ["J. ______ Taylor ministered to the people of China.", "Hudson"],
+            ["What provides the major source of income for many major Middle Eastern countries?", "Oil"],
+            ["Both Arabs and Jews are descendants of the biblical patriarch who?", "Abraham"],
+            ["Because India's main religion, Buddhism, forbids the slaughter of cattle, India has abundant livestock but is one of the poorest countries in the world? T or F", "False"],
+            ["Describe the climate of India", "Tropical Monsoon"],
+            ["Why is there so much livestock in India?", "India has a large amount of livestock because of its important role in the economy, the religious significance of cows, and the difficulty of selling and slaughtering cattle"],
+            ["What large landmass consists of the continents of Asia and Europe?", "Eurasia"],
+            ["By what name was Iran known before World War I?", "Persia"],
+            ["What is the largest peninsula in Asia?", "Arabian Peninsula"],
+            ["In what year was the modern state of Israel created?", "1948"],
+            ["Identify the two main religions in Israel.", "Judaism and Islam"],
+            ["What is a kibbutz?", "A communal society where people voluntarily live and work together for the good of the community."],
+            ["What is the highest point in Japan?", "Mt. Fuji"],
+            ["What is Japan's largest island?", "Honshu"],
+            ["What is the largest archipelago?", "the Malay Archipelago"],
+            ["What ancient city in Jordan draws tourists?", "Petra"],
+            ["Name a key river in the Fertile Crescent", "The Tigris, Euphrates, or Jordan river."],
+            ["What event marked the beginning of nations?", "The Dispersion"],
+            ["What is the root of the conflict in the Middle East?", "The fact that Jews and Arabs are common ancestors of Isaac."],
+            ["Which national capital in the Fertile Crescent was destroyed by civil war in the 1970s?", "Beirut"],
+            ["Where are the ruins of ancient Babylon found?", "Iraq"],
+            ["List a characteristic of the Arabian Peninsula", "Desert, Islam, or oil"],
+            ["What empire ruled Transcaucasia before 1991?", "The Soviet Union"],
+            ["Name one of the large deserts in the southern half of Central Asia.", "The Kyzylkum or Karakum desert."],
+            ["Adoniram ______ was the Father of American Foreign missionaries.", "Judson"],
+            ["What is the largest republic in Central Asia?", "Kazakhstan"],
+            ["North and South Korea were divided along the 38th parallel. T or F", "True"],
+            ["How did the Soviet Union harm the land in eastern Kazakhstan?", "They used the land as a nuclear testing site"],
+            ["What is Central Asia's most populous region?", "Uzbekistan"],
+            ["What does PLO stand for?", "Palestine Liberation Organization"],
+            ["This is the only country in Asia where Catholicism is the majority religion. T or F.", "True"],
+            ["Which people trace their language and culture to Persia?", "The Tajiks"],
+            ["What major landform marks the northern border of the Indian subcontinent?", "The Himalayas"],
+            ["Muslims regard what two Saudi Arabian cities as holy?", "Mecca and Medina"],
+            ["This island provided refuge for the Chinese Nationalists after the Chinese Revolution. T or F", "True"],
+            ["In which country is Mount Everest Located?", "Nepal"],
+            ["What is the coldest desert in the world (besides Antarctica)?", "the Gobi desert"],
+            ["What plateau is called the roof of the world?", "Tibet"],
+            ["Name the plateau and peninsula occupied by Asiatic Turkey.", "The Anatolian Plateau"],
+            ["Who was Turkey's first president?", "Kemal Ataturk"],
+            ["Name one of China's most important rivers.", "the Yangtze or Yellow river."],
+            ["What name did the ancient Chinese give to their land?", "Zhōngguó"],
+            ["What is the official language of both China and Taiwan?", "Mandarin Chinese"],
+            ["Name 2 of the main islands of Japan.", "Hokkaido, Honshu, Kyushu, or Shikoku"],
+            ["Identify the prosperous little island nation at the tip of the Malay Peninsula.", "Singapore"]
+        ];
+
+        const questionElement = document.getElementById("question");
+        const answerElement = document.getElementById("answer");
+        const showAnswerButton = document.getElementById("show-answer");
+
+        document.getElementById("get-question").addEventListener("click", () => {
+            if (questions.length === 0) {
+                questionElement.textContent = "All questions have been asked! Game over.";
+                answerElement.textContent = "";
+                showAnswerButton.style.display = "none";
+                return;
+            }
+
+            const randomIndex = Math.floor(Math.random() * questions.length);
+            const [question, answer] = questions.splice(randomIndex, 1)[0];
+
+            questionElement.textContent = `Question: ${question}`;
+            questionElement.classList.add("visible");
+            answerElement.textContent = "";
+            answerElement.classList.remove("visible");
+            showAnswerButton.style.display = "inline-block";
+
+            showAnswerButton.onclick = () => {
+                answerElement.textContent = `Answer: ${answer}`;
+                answerElement.classList.add("visible");
+                showAnswerButton.style.display = "none";
+            };
+        });
+    </script>
+</body>
+</html>

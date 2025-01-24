@@ -24,64 +24,27 @@
             font-size: 2.5em;
         }
 
+        nav {
+            background-color: #1c1c1c;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: #f2a365;
+            margin: 0 20px;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+
+        nav a:hover {
+            color: #e0e0e0;
+        }
+
         .content {
             display: flex;
-        }
-
-        .sidebar {
-            width: 250px;
-            background-color: #1c1c1c;
-            padding: 15px;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: -250px;
-            transition: left 0.3s ease;
-            overflow-y: auto;
-        }
-
-        .sidebar.open {
-            left: 0;
-        }
-
-        .sidebar h2 {
-            color: #f2a365;
-        }
-
-        .sidebar ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .sidebar ul li {
-            margin-bottom: 10px;
-        }
-
-        .toggle-button {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background-color: #f2a365;
-            color: #1c1c1c;
-            border: none;
-            padding: 10px 15px;
-            cursor: pointer;
-            border-radius: 4px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        }
-
-        .main-content {
-            margin-left: 50px;
+            justify-content: center;
             padding: 20px;
-            flex: 1;
-        }
-
-        footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #1e1e1e;
-            color: #e0e0e0;
         }
 
         .trivia-container {
@@ -107,6 +70,31 @@
             color: #1c1c1c;
         }
     </style>
+</head>
+<body>
+    <header>
+        <h1>Geo War</h1>
+    </header>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html">Trivia</a>
+        <a href="rules.html" target="_blank">Rules</a>
+    </nav>
+
+    <div class="content">
+        <div class="main-content">
+            <div class="trivia-container">
+                <!-- Trivia question will go here -->
+            </div>
+            <button onclick="displayTrivia()">Next Question</button>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2025 Geo War
+    </footer>
+
     <script>
         const triviaQuestions = [
             ["What two mountain ranges divide Europe from Asia?", "Ural and Caucasus Mts."],
@@ -165,7 +153,7 @@
             ["What name did the ancient Chinese give to their land?", "Zhōngguó"],
             ["What is the official language of both China and Taiwan?", "Mandarin Chinese"],
             ["Name 2 of the main islands of Japan.", "Hokkaido, Honshu, Kyushu, or Shikoku"],
-            ["Identify the prosperous little island nation at the tip of the Malay Peninsula.","Singapore"]
+            ["Identify the prosperous little island nation at the tip of the Malay Peninsula.", "Singapore"]
         ];
 
         let usedQuestions = [];
@@ -199,45 +187,10 @@
             document.querySelector('.answer').style.display = 'block';
         }
 
-        function toggleSidebar() {
-            document.querySelector('.sidebar').classList.toggle('open');
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
             displayTrivia();
         });
     </script>
-</head>
-<body>
-    <header>
-        <h1>Geo War</h1>
-        <button class="toggle-button" onclick="toggleSidebar()">Rules</button>
-    </header>
-
-    <div class="content">
-        <div class="sidebar">
-            <h2>Game Rules</h2>
-            <ul>
-                <li>Players bid for countries in Asia during the auction phase.</li>
-                <li>Money is only used during the auction phase, and countries generate income.</li>
-                <li>Players attack bordering or nearby island countries to expand territories.</li>
-                <li>Outcomes of battles depend on trivia knowledge and military power.</li>
-                <li>Trivia questions influence battles and outcomes.</li>
-                <li>Military power adds strategy, but the game prioritizes trivia and tactics.</li>
-                <li>Players can form alliances and gain bonuses from certain countries.</li>
-                <li>Win by conquering all of Asia on the game map.</li>
-            </ul>
-        </div>
-
-        <div class="main-content">
-            <div class="trivia-container"></div>
-            <button onclick="displayTrivia()">Next Question</button>
-        </div>
-    </div>
-
-    <footer>
-        &copy; 2025 Geo War
-    </footer>
 </body>
 </html>
 

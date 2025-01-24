@@ -3,136 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geo War</title>
+    <title>Geography Trivia Game</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #f0f8ff;
             margin: 0;
             padding: 0;
-            background-color: #f0f0f0;
-            color: #333;
         }
-
-        header {
-            background-color: #3f51b5;
+        #game-container {
+            max-width: 600px;
+            margin: 50px auto;
             padding: 20px;
-            text-align: center;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid #007bff;
         }
-
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
-            color: #fff;
-        }
-
-        .content {
-            display: flex;
-        }
-
-        .sidebar {
-            width: 250px;
-            background-color: #3f51b5;
-            padding: 15px;
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: -250px;
-            transition: left 0.3s ease;
-            overflow-y: auto;
-        }
-
-        .sidebar.open {
-            left: 0;
-        }
-
-        .sidebar h2 {
-            color: #fff;
+        h1 {
+            color: #007bff;
             margin-bottom: 20px;
         }
-
-        .sidebar ul {
-            list-style-type: none;
-            padding: 0;
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
         }
-
-        .sidebar ul li {
-            margin-bottom: 10px;
-            color: #fff;
-        }
-
-        .toggle-button {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background-color: #ff5722;
-            color: #fff;
+        button {
+            background-color: #007bff;
+            color: #ffffff;
             border: none;
-            padding: 10px 15px;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1rem;
             cursor: pointer;
-            border-radius: 4px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease;
         }
-
-        .main-content {
-            margin-left: 50px;
-            padding: 20px;
-            flex: 1;
+        button:hover {
+            background-color: #0056b3;
         }
-
-        footer {
-            text-align: center;
-            padding: 10px;
-            background-color: #3f51b5;
-            color: #fff;
+        #question, #answer {
+            font-size: 1.2rem;
+            margin: 20px 0;
+            color: #333333;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
         }
-
-        .trivia-container {
-            margin-bottom: 20px;
+        #question.visible, #answer.visible {
+            opacity: 1;
         }
-
-        .trivia-question {
-            margin-bottom: 10px;
-        }
-
-        .answer {
-            color: #ff5722;
+        #answer {
+            font-style: italic;
             font-weight: bold;
         }
-
-        button {
-            margin-top: 10px;
-            padding: 10px 15px;
-            background-color: #ff5722;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            color: #fff;
-        }
-
-        .question-button {
-            margin-top: 10px;
-            padding: 10px 15px;
-            background-color: #4caf50;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            color: #fff;
-        }
-
-        .question-button:hover {
-            background-color: #45a049;
-        }
-
-        .rules-section {
-            display: none;
-        }
-
-        .rules-section.open {
-            display: block;
+        footer {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #555555;
         }
     </style>
+</head>
+<body>
+    <div id="game-container">
+        <h1>Geography Trivia Game</h1>
+        <p>Test your knowledge or not. I don't care.</p>
+        <button id="get-question">Get Question</button>
+        <div id="question"></div>
+        <button id="show-answer" style="display: none;">Show Answer</button>
+        <div id="answer"></div>
+    </div>
+    <footer>© 2025 Geography Trivia Game | Created with procrastination</footer>
     <script>
-        const triviaQuestions = [
+        const questions = [
             ["What two mountain ranges divide Europe from Asia?", "Ural and Caucasus Mts."],
             ["What is the name of the world's largest lake?", "Caspian Sea"],
             ["What man-made body of water separates Asia from Africa?", "The Suez Canal"],
@@ -143,7 +85,7 @@
             ["Brunei, Indonesia, and Malaysia occupy the island of what?", "Borneo"],
             ["The Amu Darya and the Syr Darya are the two principal rivers of what region?", "Central Asia"],
             ["China's two most important rivers are the Huang He and the Brahmaputra. T or F", "False"],
-            ["This is the world's most populous country, it has a population of over 1 billion. T or F.", "True"],
+            ["China is the world's most populous country, it has a population of over 1 billion. T or F.", "True"],
             ["What is the world's longest fortification?", "The Great Wall of China"],
             ["J. ______ Taylor ministered to the people of China.", "Hudson"],
             ["What provides the major source of income for many major Middle Eastern countries?", "Oil"],
@@ -175,11 +117,11 @@
             ["How did the Soviet Union harm the land in eastern Kazakhstan?", "They used the land as a nuclear testing site"],
             ["What is Central Asia's most populous region?", "Uzbekistan"],
             ["What does PLO stand for?", "Palestine Liberation Organization"],
-            ["This is the only country in Asia where Catholicism is the majority religion. T or F.", "True"],
+            ["Philippines is the only country in Asia where Catholicism is the majority religion. T or F.", "True"],
             ["Which people trace their language and culture to Persia?", "The Tajiks"],
             ["What major landform marks the northern border of the Indian subcontinent?", "The Himalayas"],
             ["Muslims regard what two Saudi Arabian cities as holy?", "Mecca and Medina"],
-            ["This island provided refuge for the Chinese Nationalists after the Chinese Revolution. T or F", "True"],
+            ["The island of Taiwan provided refuge for the Chinese Nationalists after the Chinese Revolution. T or F", "True"],
             ["In which country is Mount Everest Located?", "Nepal"],
             ["What is the coldest desert in the world (besides Antarctica)?", "the Gobi desert"],
             ["What plateau is called the roof of the world?", "Tibet"],
@@ -191,80 +133,29 @@
             ["Name 2 of the main islands of Japan.", "Hokkaido, Honshu, Kyushu, or Shikoku"],
             ["Identify the prosperous little island nation at the tip of the Malay Peninsula.", "Singapore"]
         ];
-
-        let usedQuestions = [];
-
-        function getRandomQuestion() {
-            if (usedQuestions.length === triviaQuestions.length) {
-                usedQuestions = []; // Reset if all questions are used
+        const questionElement = document.getElementById("question");
+        const answerElement = document.getElementById("answer");
+        const showAnswerButton = document.getElementById("show-answer");
+        document.getElementById("get-question").addEventListener("click", () => {
+            if (questions.length === 0) {
+                questionElement.textContent = "All questions have been asked! Game over.";
+                answerElement.textContent = "";
+                showAnswerButton.style.display = "none";
+                return;
             }
-
-            let questionIndex;
-            do {
-                questionIndex = Math.floor(Math.random() * triviaQuestions.length);
-            } while (usedQuestions.includes(questionIndex));
-
-            usedQuestions.push(questionIndex);
-            return triviaQuestions[questionIndex];
-        }
-
-        function displayTrivia() {
-            const triviaContainer = document.querySelector('.trivia-container');
-            const [question, answer] = getRandomQuestion();
-
-            triviaContainer.innerHTML = `
-                <div class="trivia-question">${question}</div>
-                <button onclick="showAnswer()">Show Answer</button>
-                <div class="answer" style="display:none;">Answer: ${answer}</div>
-            `;
-        }
-
-        function showAnswer() {
-            document.querySelector('.answer').style.display = 'block';
-        }
-
-        function toggleSidebar() {
-            document.querySelector('.sidebar').classList.toggle('open');
-        }
-
-        function toggleRules() {
-            document.querySelector('.rules-section').classList.toggle('open');
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            displayTrivia();
+            const randomIndex = Math.floor(Math.random() * questions.length);
+            const [question, answer] = questions.splice(randomIndex, 1)[0];
+            questionElement.textContent = `Question: ${question}`;
+            questionElement.classList.add("visible");
+            answerElement.textContent = "";
+            answerElement.classList.remove("visible");
+            showAnswerButton.style.display = "inline-block";
+            showAnswerButton.onclick = () => {
+                answerElement.textContent = `Answer: ${answer}`;
+                answerElement.classList.add("visible");
+                showAnswerButton.style.display = "none";
+            };
         });
     </script>
-</head>
-<body>
-    <header>
-        <h1>Geo War</h1>
-        <button class="toggle-button" onclick="toggleSidebar()">Rules</button>
-    </header>
-
-    <div class="content">
-        <div class="sidebar">
-            <h2>Game Rules</h2>
-            <ul>
-                <li>Players bid for countries in Asia during the auction phase.</li>
-                <li>Money is only used during the auction phase, and countries generate income.</li>
-                <li>Players attack bordering or nearby island countries to expand territories.</li>
-                <li>Outcomes of battles depend on trivia knowledge and military power.</li>
-                <li>Trivia questions influence battles and outcomes.</li>
-                <li>Military power adds strategy, but the game prioritizes trivia and tactics.</li>
-                <li>Players can form alliances and gain bonuses from certain countries.</li>
-                <li>Win by conquering all of Asia on the game map.</li>
-            </ul>
-        </div>
-
-        <div class="main-content">
-            <div class="trivia-container"></div>
-            <button class="question-button" onclick="displayTrivia()">Next Question</button>
-        </div>
-    </div>
-
-    <footer>
-        &copy; 2025 Geo War
-    </footer>
 </body>
 </html>

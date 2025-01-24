@@ -3,88 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geography Trivia Game</title>
+    <title>Geo War</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            text-align: center;
-            background-color: #f0f8ff;
+            font-family: Arial, sans-serif;
             margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        header {
+            background-color: #1e1e1e;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        .content {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #1c1c1c;
+            padding: 15px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: -250px;
+            transition: left 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .sidebar.open {
+            left: 0;
+        }
+
+        .sidebar h2 {
+            color: #f2a365;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
             padding: 0;
         }
 
-        #game-container {
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border: 2px solid #007bff;
+        .sidebar ul li {
+            margin-bottom: 10px;
         }
 
-        h1 {
-            color: #007bff;
-            margin-bottom: 20px;
-        }
-
-        p {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-        }
-
-        button {
-            background-color: #007bff;
-            color: #ffffff;
+        .toggle-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #f2a365;
+            color: #1c1c1c;
             border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            font-size: 1rem;
+            padding: 10px 15px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         }
 
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        #question, #answer {
-            font-size: 1.2rem;
-            margin: 20px 0;
-            color: #333333;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-        }
-
-        #question.visible, #answer.visible {
-            opacity: 1;
-        }
-
-        #answer {
-            font-style: italic;
-            font-weight: bold;
+        .main-content {
+            margin-left: 50px;
+            padding: 20px;
+            flex: 1;
         }
 
         footer {
-            margin-top: 30px;
-            font-size: 0.9rem;
-            color: #555555;
+            text-align: center;
+            padding: 10px;
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+
+        .trivia-container {
+            margin-bottom: 20px;
+        }
+
+        .trivia-question {
+            margin-bottom: 10px;
+        }
+
+        .answer {
+            color: #f2a365;
+            font-weight: bold;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: #f2a365;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #1c1c1c;
         }
     </style>
-</head>
-<body>
-    <div id="game-container">
-        <h1>Geography Trivia Game</h1>
-        <p>Test your knowledge or not. I don't care.</p>
-        <button id="get-question">Get Question</button>
-        <div id="question"></div>
-        <button id="show-answer" style="display: none;">Show Answer</button>
-        <div id="answer"></div>
-    </div>
-    <footer>© 2025 Geography Trivia Game | Created with procrastination</footer>
-
     <script>
-        const questions = [
+        const triviaQuestions = [
             ["What two mountain ranges divide Europe from Asia?", "Ural and Caucasus Mts."],
             ["What is the name of the world's largest lake?", "Caspian Sea"],
             ["What man-made body of water separates Asia from Africa?", "The Suez Canal"],
@@ -141,36 +165,79 @@
             ["What name did the ancient Chinese give to their land?", "Zhōngguó"],
             ["What is the official language of both China and Taiwan?", "Mandarin Chinese"],
             ["Name 2 of the main islands of Japan.", "Hokkaido, Honshu, Kyushu, or Shikoku"],
-            ["Identify the prosperous little island nation at the tip of the Malay Peninsula.", "Singapore"]
+            ["Identify the prosperous little island nation at the tip of the Malay Peninsula.","Singapore"]
         ];
 
-        const questionElement = document.getElementById("question");
-        const answerElement = document.getElementById("answer");
-        const showAnswerButton = document.getElementById("show-answer");
+        let usedQuestions = [];
 
-        document.getElementById("get-question").addEventListener("click", () => {
-            if (questions.length === 0) {
-                questionElement.textContent = "All questions have been asked! Game over.";
-                answerElement.textContent = "";
-                showAnswerButton.style.display = "none";
-                return;
+        function getRandomQuestion() {
+            if (usedQuestions.length === triviaQuestions.length) {
+                usedQuestions = []; // Reset if all questions are used
             }
 
-            const randomIndex = Math.floor(Math.random() * questions.length);
-            const [question, answer] = questions.splice(randomIndex, 1)[0];
+            let questionIndex;
+            do {
+                questionIndex = Math.floor(Math.random() * triviaQuestions.length);
+            } while (usedQuestions.includes(questionIndex));
 
-            questionElement.textContent = `Question: ${question}`;
-            questionElement.classList.add("visible");
-            answerElement.textContent = "";
-            answerElement.classList.remove("visible");
-            showAnswerButton.style.display = "inline-block";
+            usedQuestions.push(questionIndex);
+            return triviaQuestions[questionIndex];
+        }
 
-            showAnswerButton.onclick = () => {
-                answerElement.textContent = `Answer: ${answer}`;
-                answerElement.classList.add("visible");
-                showAnswerButton.style.display = "none";
-            };
+        function displayTrivia() {
+            const triviaContainer = document.querySelector('.trivia-container');
+            const [question, answer] = getRandomQuestion();
+
+            triviaContainer.innerHTML = `
+                <div class="trivia-question">${question}</div>
+                <button onclick="showAnswer()">Show Answer</button>
+                <div class="answer" style="display:none;">Answer: ${answer}</div>
+            `;
+        }
+
+        function showAnswer() {
+            document.querySelector('.answer').style.display = 'block';
+        }
+
+        function toggleSidebar() {
+            document.querySelector('.sidebar').classList.toggle('open');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            displayTrivia();
         });
     </script>
+</head>
+<body>
+    <header>
+        <h1>Geo War</h1>
+        <button class="toggle-button" onclick="toggleSidebar()">Rules</button>
+    </header>
+
+    <div class="content">
+        <div class="sidebar">
+            <h2>Game Rules</h2>
+            <ul>
+                <li>Players bid for countries in Asia during the auction phase.</li>
+                <li>Money is only used during the auction phase, and countries generate income.</li>
+                <li>Players attack bordering or nearby island countries to expand territories.</li>
+                <li>Outcomes of battles depend on trivia knowledge and military power.</li>
+                <li>Trivia questions influence battles and outcomes.</li>
+                <li>Military power adds strategy, but the game prioritizes trivia and tactics.</li>
+                <li>Players can form alliances and gain bonuses from certain countries.</li>
+                <li>Win by conquering all of Asia on the game map.</li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <div class="trivia-container"></div>
+            <button onclick="displayTrivia()">Next Question</button>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2025 Geo War
+    </footer>
 </body>
 </html>
+

@@ -9,12 +9,12 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #121212;
-            color: #e0e0e0;
+            background-color: #f0f0f0;
+            color: #333;
         }
 
         header {
-            background-color: #1e1e1e;
+            background-color: #3f51b5;
             padding: 20px;
             text-align: center;
         }
@@ -22,29 +22,68 @@
         header h1 {
             margin: 0;
             font-size: 2.5em;
-        }
-
-        nav {
-            background-color: #1c1c1c;
-            padding: 10px;
-            text-align: center;
-        }
-
-        nav a {
-            color: #f2a365;
-            margin: 0 20px;
-            text-decoration: none;
-            font-size: 1.2em;
-        }
-
-        nav a:hover {
-            color: #e0e0e0;
+            color: #fff;
         }
 
         .content {
             display: flex;
-            justify-content: center;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #3f51b5;
+            padding: 15px;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: -250px;
+            transition: left 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .sidebar.open {
+            left: 0;
+        }
+
+        .sidebar h2 {
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .toggle-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #ff5722;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .main-content {
+            margin-left: 50px;
             padding: 20px;
+            flex: 1;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #3f51b5;
+            color: #fff;
         }
 
         .trivia-container {
@@ -56,45 +95,42 @@
         }
 
         .answer {
-            color: #f2a365;
+            color: #ff5722;
             font-weight: bold;
         }
 
         button {
             margin-top: 10px;
             padding: 10px 15px;
-            background-color: #f2a365;
+            background-color: #ff5722;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            color: #1c1c1c;
+            color: #fff;
+        }
+
+        .question-button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: #4caf50;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .question-button:hover {
+            background-color: #45a049;
+        }
+
+        .rules-section {
+            display: none;
+        }
+
+        .rules-section.open {
+            display: block;
         }
     </style>
-</head>
-<body>
-    <header>
-        <h1>Geo War</h1>
-    </header>
-
-    <!-- Navigation -->
-    <nav>
-        <a href="index.html">Trivia</a>
-        <a href="rules.html" target="_blank">Rules</a>
-    </nav>
-
-    <div class="content">
-        <div class="main-content">
-            <div class="trivia-container">
-                <!-- Trivia question will go here -->
-            </div>
-            <button onclick="displayTrivia()">Next Question</button>
-        </div>
-    </div>
-
-    <footer>
-        &copy; 2025 Geo War
-    </footer>
-
     <script>
         const triviaQuestions = [
             ["What two mountain ranges divide Europe from Asia?", "Ural and Caucasus Mts."],
@@ -187,10 +223,48 @@
             document.querySelector('.answer').style.display = 'block';
         }
 
+        function toggleSidebar() {
+            document.querySelector('.sidebar').classList.toggle('open');
+        }
+
+        function toggleRules() {
+            document.querySelector('.rules-section').classList.toggle('open');
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             displayTrivia();
         });
     </script>
+</head>
+<body>
+    <header>
+        <h1>Geo War</h1>
+        <button class="toggle-button" onclick="toggleSidebar()">Rules</button>
+    </header>
+
+    <div class="content">
+        <div class="sidebar">
+            <h2>Game Rules</h2>
+            <ul>
+                <li>Players bid for countries in Asia during the auction phase.</li>
+                <li>Money is only used during the auction phase, and countries generate income.</li>
+                <li>Players attack bordering or nearby island countries to expand territories.</li>
+                <li>Outcomes of battles depend on trivia knowledge and military power.</li>
+                <li>Trivia questions influence battles and outcomes.</li>
+                <li>Military power adds strategy, but the game prioritizes trivia and tactics.</li>
+                <li>Players can form alliances and gain bonuses from certain countries.</li>
+                <li>Win by conquering all of Asia on the game map.</li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <div class="trivia-container"></div>
+            <button class="question-button" onclick="displayTrivia()">Next Question</button>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2025 Geo War
+    </footer>
 </body>
 </html>
-

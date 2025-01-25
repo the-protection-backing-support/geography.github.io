@@ -5,6 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Geography Trivia Game</title>
     <style>
+        <div style="margin-top: 20px;">
+    <a href="https://tinyurl.com/asiatrivia" style="text-decoration: none;">
+        <button style="
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;">
+            Go to Trivia
+        </button>
+    </a>
+</div>
         body {
             font-family: 'Arial', sans-serif;
             text-align: center;
@@ -37,6 +51,7 @@
             border-radius: 8px;
             font-size: 1rem;
             cursor: pointer;
+            transition: background-color 0.3s ease;
             transition: all 0.3s ease;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
@@ -80,8 +95,8 @@
     </div>
     <footer>© 2025 Geography Trivia Game | Created with procrastination</footer>
     <script>
+        const questions = [
         const questions = 
-
             ["What two mountain ranges divide Europe from Asia?", "Ural and Caucasus Mts."],
             ["What is the name of the world's largest lake?", "Caspian Sea"],
             ["What man-made body of water separates Asia from Africa?", "The Suez Canal"],
@@ -138,8 +153,9 @@
             ["What name did the ancient Chinese give to their land?", "Zhōngguó"],
             ["What is the official language of both China and Taiwan?", "Mandarin Chinese"],
             ["Name 2 of the main islands of Japan.", "Hokkaido, Honshu, Kyushu, or Shikoku"],
-            ["Identify the prosperous little island nation at the tip of the Malay Peninsula.", "Singapore"
+            ["Identify the prosperous little island nation at the tip of the Malay Peninsula.", "Singapore"]
         ];
+        ;
         const questionElement = document.getElementById("question");
         const answerElement = document.getElementById("answer");
         const showAnswerButton = document.getElementById("show-answer");

@@ -5,20 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Geography Trivia Game</title>
     <style>
-        <div style="margin-top: 20px;">
-    <a href="https://tinyurl.com/asiatrivia" style="text-decoration: none;">
-        <button style="
-            background-color: #007BFF;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;">
-            Go to Trivia
-        </button>
-    </a>
-</div>
         body {
             font-family: 'Arial', sans-serif;
             text-align: center;
@@ -52,16 +38,9 @@
             font-size: 1rem;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         button:hover {
             background-color: #0056b3;
-            transform: scale(1.05);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-        }
-        button:active {
-            transform: scale(0.95);
         }
         #question, #answer {
             font-size: 1.2rem;
@@ -96,7 +75,6 @@
     <footer>© 2025 Geography Trivia Game | Created with procrastination</footer>
     <script>
         const questions = [
-        const questions = 
             ["What two mountain ranges divide Europe from Asia?", "Ural and Caucasus Mts."],
             ["What is the name of the world's largest lake?", "Caspian Sea"],
             ["What man-made body of water separates Asia from Africa?", "The Suez Canal"],
@@ -107,7 +85,7 @@
             ["Brunei, Indonesia, and Malaysia occupy the island of what?", "Borneo"],
             ["The Amu Darya and the Syr Darya are the two principal rivers of what region?", "Central Asia"],
             ["China's two most important rivers are the Huang He and the Brahmaputra. T or F", "False"],
-            ["China is the world's most populous country, it has a population of over 1 billion. T or F.", "True"],
+            ["This is the world's most populous country, it has a population of over 1 billion. T or F.", "True"],
             ["What is the world's longest fortification?", "The Great Wall of China"],
             ["J. ______ Taylor ministered to the people of China.", "Hudson"],
             ["What provides the major source of income for many major Middle Eastern countries?", "Oil"],
@@ -139,11 +117,11 @@
             ["How did the Soviet Union harm the land in eastern Kazakhstan?", "They used the land as a nuclear testing site"],
             ["What is Central Asia's most populous region?", "Uzbekistan"],
             ["What does PLO stand for?", "Palestine Liberation Organization"],
-            ["Philippines is the only country in Asia where Catholicism is the majority religion. T or F.", "True"],
+            ["This is the only country in Asia where Catholicism is the majority religion. T or F.", "True"],
             ["Which people trace their language and culture to Persia?", "The Tajiks"],
             ["What major landform marks the northern border of the Indian subcontinent?", "The Himalayas"],
             ["Muslims regard what two Saudi Arabian cities as holy?", "Mecca and Medina"],
-            ["The island of Taiwan provided refuge for the Chinese Nationalists after the Chinese Revolution. T or F", "True"],
+            ["This island provided refuge for the Chinese Nationalists after the Chinese Revolution. T or F", "True"],
             ["In which country is Mount Everest Located?", "Nepal"],
             ["What is the coldest desert in the world (besides Antarctica)?", "the Gobi desert"],
             ["What plateau is called the roof of the world?", "Tibet"],
@@ -155,7 +133,6 @@
             ["Name 2 of the main islands of Japan.", "Hokkaido, Honshu, Kyushu, or Shikoku"],
             ["Identify the prosperous little island nation at the tip of the Malay Peninsula.", "Singapore"]
         ];
-        ;
         const questionElement = document.getElementById("question");
         const answerElement = document.getElementById("answer");
         const showAnswerButton = document.getElementById("show-answer");
